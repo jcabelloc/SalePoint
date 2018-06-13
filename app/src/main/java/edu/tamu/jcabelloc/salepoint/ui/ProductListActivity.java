@@ -1,6 +1,7 @@
 package edu.tamu.jcabelloc.salepoint.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import edu.tamu.jcabelloc.salepoint.R;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
@@ -55,10 +57,32 @@ public class ProductListActivity extends AppCompatActivity {
         ProductListAdapter productListAdapter = new ProductListAdapter(products);
         productListRecylerView.setAdapter(productListAdapter);
 
-        products.addAll(productListViewModel.getProducts());
-        Log.d("JCC",  "Number of Products:  " + String.valueOf(products.size()));
+        //products.addAll(productListViewModel.getProducts());
 
-        productListAdapter.notifyDataSetChanged();
+        productListViewModel.getProducts().observe(this, productsList -> {
+            products.addAll(productsList);
+            productListAdapter.notifyDataSetChanged();
+
+        });
+
+        Handler handler = new Handler();
+        handler.postDelayed( ()-> {
+            List<ListViewProduct> newProducts = new ArrayList<>();
+            Random rand = new Random();
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 11", 400.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 12", 500.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 13", 500.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 14", 500.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 15", 100.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 16", 200.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 17", 300.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 18", 400.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 19", 500.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 20", 500.0));
+            newProducts.add(new ListViewProduct(rand.nextInt(), "Product 21", 500.0));
+            productListViewModel.addProducts(newProducts);
+        }, 5000);
+
 
 
     }
