@@ -19,8 +19,10 @@ import java.util.Random;
 
 import edu.tamu.jcabelloc.salepoint.R;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
+import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
+import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 public class ProductListActivity extends AppCompatActivity {
 
@@ -56,7 +58,9 @@ public class ProductListActivity extends AppCompatActivity {
         ProductListAdapter productListAdapter = new ProductListAdapter(products);
         productListRecylerView.setAdapter(productListAdapter);
 
-        ProductListViewModel productListViewModel = ViewModelProviders.of(this).get(ProductListViewModel.class);
+
+        ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(this);
+        ProductListViewModel productListViewModel = ViewModelProviders.of(this, productListViewModelFactory).get(ProductListViewModel.class);
         Log.d("JCC", "Thread - ProductListActivity: " + Thread.currentThread());
         productListViewModel.getProducts().observe(this, productsList -> {
             Log.d("JCC", "Observed productsList: " + productsList.size() + " - " + Arrays.toString(productsList.toArray()));
@@ -66,6 +70,7 @@ public class ProductListActivity extends AppCompatActivity {
 
         });
 
+        /*
         Handler handler = new Handler();
         handler.postDelayed( ()-> {
             List<Product> newProducts = new ArrayList<>();
@@ -104,7 +109,7 @@ public class ProductListActivity extends AppCompatActivity {
             Log.d("JCC", "newProducts: " + Arrays.toString(newProducts.toArray()));
             productListViewModel.insert(newProducts.get(rand.nextInt(31)));
         }, 7000);
-
+        */
 
 
     }

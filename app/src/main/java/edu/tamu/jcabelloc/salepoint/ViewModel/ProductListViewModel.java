@@ -18,42 +18,27 @@ import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
 import edu.tamu.jcabelloc.salepoint.data.repository.ProductRepository;
 
-public class ProductListViewModel extends AndroidViewModel{
+public class ProductListViewModel extends ViewModel{
 
     LiveData<List<ListViewProduct>> products;
 
     ProductRepository productRepository;
 
 
-    public ProductListViewModel(Application application){
-        super(application);
-        productRepository = new ProductRepository(application);
-        Log.d("JCC", "productRepository: " + productRepository.hashCode());
+    public ProductListViewModel(ProductRepository productRepository){
+
+        this.productRepository = productRepository;
         products = productRepository.getAllProducts();
 
-        /*
-        List<ListViewProduct> productsList = new ArrayList<>();
-        Random rand = new Random();
-
-
-
-        products = new MutableLiveData<>();
-        products.setValue(productsList);
-        */
     }
 
     public LiveData<List<ListViewProduct>> getProducts(){
-        Log.d("JCC", "Thread - ProductListViewModel - getProducts: " + Thread.currentThread());
         return products;
     }
 
     public void insert(Product product) {
-        Log.d("JCC", "Thread - ProductListViewModel - insert: " + Thread.currentThread());
         productRepository.insert(product);
     }
 
-//    public void addProducts(List<Product> newProducts){
-//        products.postValue(newProducts);
-//
-//    }
+
 }

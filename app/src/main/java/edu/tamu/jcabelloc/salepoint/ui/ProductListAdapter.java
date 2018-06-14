@@ -25,7 +25,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             super(view);
             productIconImageView = view.findViewById(R.id.productIconImageView);
             productNameTextView = view.findViewById(R.id.productNameTextView);
-            Log.d("JCC", "ProductListViewHolder");
+            //Log.d("JCC", "ProductListViewHolder");
         }
     }
 
@@ -39,7 +39,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public ProductListAdapter.ProductListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View productItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product_list, parent, false);
         ProductListViewHolder productListViewHolder = new ProductListViewHolder(productItem);
-        Log.d("JCC", "onCreateViewHolder");
+        //Log.d("JCC", "onCreateViewHolder");
         return productListViewHolder;
     }
     //  binds the view holders to their data.
@@ -48,12 +48,12 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         holder.productIconImageView.setImageResource(R.drawable.ic_product);
         holder.productNameTextView.setText(products.get(position).getName());
-        Log.d("JCC", "onBindViewHolder");
+        //Log.d("JCC", "onBindViewHolder");
     }
 
     @Override
     public int getItemCount() {
-        Log.d("JCC", "getItemCount:  " + String.valueOf(products.size()));
+        //Log.d("JCC", "getItemCount:  " + String.valueOf(products.size()));
         return products.size();
     }
 
