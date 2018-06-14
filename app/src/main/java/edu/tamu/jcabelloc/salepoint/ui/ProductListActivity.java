@@ -1,6 +1,7 @@
 package edu.tamu.jcabelloc.salepoint.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -21,7 +22,6 @@ import edu.tamu.jcabelloc.salepoint.R;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
-import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
 import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 public class ProductListActivity extends AppCompatActivity {
@@ -40,7 +40,8 @@ public class ProductListActivity extends AppCompatActivity {
         addFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "FAB tapped", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplicationContext(), NewProductActivity.class);
+                startActivity(intent);
             }
         });
 
