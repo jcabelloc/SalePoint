@@ -15,7 +15,8 @@ buildscript {
     }
 }
 //JCC library versions
-ext.arch_version = "1.1.1"
+ext.arch_version = "1.1.0"
+ext.room_version = "1.1.0"
 
 
 allprojects {

@@ -1,55 +1,59 @@
 package edu.tamu.jcabelloc.salepoint.ViewModel;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModel;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
+import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
+import edu.tamu.jcabelloc.salepoint.data.repository.ProductRepository;
 
-public class ProductListViewModel extends ViewModel{
+public class ProductListViewModel extends AndroidViewModel{
 
-    MutableLiveData<List<ListViewProduct>> products;
+    LiveData<List<ListViewProduct>> products;
 
-    public ProductListViewModel(){
+    ProductRepository productRepository;
 
+
+    public ProductListViewModel(Application application){
+        super(application);
+        productRepository = new ProductRepository(application);
+        Log.d("JCC", "productRepository: " + productRepository.hashCode());
+        products = productRepository.getAllProducts();
+
+        /*
         List<ListViewProduct> productsList = new ArrayList<>();
         Random rand = new Random();
 
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 1", 100.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 2", 200.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 3", 300.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 4", 400.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 5", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 6", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 7", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 8", 100.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 9", 200.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 10", 300.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 11", 400.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 12", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 13", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 14", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 15", 100.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 16", 200.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 17", 300.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 18", 400.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 19", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 20", 500.0));
-        productsList.add(new ListViewProduct(rand.nextInt(), "Product 21", 500.0));
+
+
         products = new MutableLiveData<>();
         products.setValue(productsList);
-
+        */
     }
 
-    public MutableLiveData<List<ListViewProduct>> getProducts(){
+    public LiveData<List<ListViewProduct>> getProducts(){
+        Log.d("JCC", "Thread - ProductListViewModel - getProducts: " + Thread.currentThread());
         return products;
     }
 
-    public void addProducts(List<ListViewProduct> newProducts){
-        products.postValue(newProducts);
-
+    public void insert(Product product) {
+        Log.d("JCC", "Thread - ProductListViewModel - insert: " + Thread.currentThread());
+        productRepository.insert(product);
     }
+
+//    public void addProducts(List<Product> newProducts){
+//        products.postValue(newProducts);
+//
+//    }
 }
