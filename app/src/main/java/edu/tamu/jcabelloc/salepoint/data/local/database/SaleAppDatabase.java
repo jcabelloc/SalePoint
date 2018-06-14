@@ -14,10 +14,12 @@ public abstract class SaleAppDatabase extends RoomDatabase {
     public static final String DATABASE_NAME = "saleapp";
     public abstract ProductDao productDao();
 
-    //TODO make this class singleton
-    public static SaleAppDatabase getInstance(Context context) {
-        SaleAppDatabase db = Room.databaseBuilder(context.getApplicationContext(), SaleAppDatabase.class, DATABASE_NAME).build();
-        return db;
-    }
+    private static SaleAppDatabase instance;
 
+    public static SaleAppDatabase getInstance(Context context) {
+        if (instance == null) {
+            instance = Room.databaseBuilder(context.getApplicationContext(), SaleAppDatabase.class, DATABASE_NAME).build();
+        }
+        return instance;
+    }
 }

@@ -15,8 +15,7 @@ public class ProductRepository {
 
     private static ProductRepository instance;
 
-    public ProductRepository(ProductDao productDao){
-
+    private ProductRepository(ProductDao productDao){
         this.productDao = productDao;
         products = this.productDao.getAllProducts();
     }
