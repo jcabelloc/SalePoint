@@ -13,7 +13,7 @@ import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
 @Dao
 public interface ProductDao {
 
-    @Query("SELECT id, name, price, image FROM Product ORDER BY id ASC")
+    @Query("SELECT id, name, description, price, image FROM Product ORDER BY id ASC")
     LiveData<List<ListViewProduct>> getAllProducts();
 
     @Query("DELETE FROM Product")

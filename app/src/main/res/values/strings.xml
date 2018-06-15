@@ -4,6 +4,6 @@
     <string name="product_price_hint">Precio del Producto</string>
     <string name="add_button_text">Agregar</string>
     <string name="product_image_description">Imagen del Producto</string>
-
+    <string name="product_description_hint">Informacion del Producto </string>
 
 </resources>

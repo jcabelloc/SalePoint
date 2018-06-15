@@ -33,16 +33,17 @@ public class NewProductActivity extends AppCompatActivity {
 
     ImageView productImageView;
     EditText productNameEditText;
+    EditText descriptionEditText;
     EditText priceEditText;
     Bitmap imageBitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
-        productImageView = findViewById(R.id.productImageView);
         productNameEditText = findViewById(R.id.productNameEditText);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
         priceEditText = findViewById(R.id.priceEditText);
-
+        productImageView = findViewById(R.id.productImageView);
     }
 
     //TODO Check Permissions
@@ -79,7 +80,10 @@ public class NewProductActivity extends AppCompatActivity {
     public void addProduct(View view){
         ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(getApplicationContext());
         ProductListViewModel productListViewModel = ViewModelProviders.of(this, productListViewModelFactory).get(ProductListViewModel.class);
-        Product newProduct = new Product(productNameEditText.getText().toString(), Double.valueOf(priceEditText.getText().toString()),getBitmapAsByteArray(imageBitmap));
+        String productName = productNameEditText.getText().toString().toUpperCase();
+        String productDescription = descriptionEditText.getText().toString();
+        double productPrice = Double.valueOf(priceEditText.getText().toString());
+        Product newProduct = new Product(productName, productDescription, productPrice, getBitmapAsByteArray(imageBitmap));
         productListViewModel.insert(newProduct);
     }
 

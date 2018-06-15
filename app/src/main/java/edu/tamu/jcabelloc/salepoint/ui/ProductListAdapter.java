@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import edu.tamu.jcabelloc.salepoint.R;
@@ -22,10 +24,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public class ProductListViewHolder extends RecyclerView.ViewHolder {
         ImageView productIconImageView;
         TextView productNameTextView;
+        TextView descriptionTextView;
+        TextView priceTextView;
         public ProductListViewHolder(View view){
             super(view);
             productIconImageView = view.findViewById(R.id.productIconImageView);
             productNameTextView = view.findViewById(R.id.productNameTextView);
+            descriptionTextView = view.findViewById(R.id.descriptionTextView);
+            priceTextView = view.findViewById(R.id.priceTextView);
             //Log.d("JCC", "ProductListViewHolder");
         }
     }
@@ -48,7 +54,16 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
         holder.productIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(products.get(position).getImage(), 0 , products.get(position).getImage().length));
-        holder.productNameTextView.setText(products.get(position).getName());
+        holder.productNameTextView.setText(products.get(position).getName().toUpperCase());
+        // TODO refactor this section
+        String description = products.get(position).getDescription();
+        if (description == null || description.length() == 0) {
+            description = "...";
+        } else {
+            description = description.length() > 30 ? description.substring(0, 28) + "..." : description;
+        }
+        holder.descriptionTextView.setText(description);
+        holder.priceTextView.setText("S/" + String.valueOf(products.get(position).getPrice()));
         //Log.d("JCC", "onBindViewHolder");
     }
 
