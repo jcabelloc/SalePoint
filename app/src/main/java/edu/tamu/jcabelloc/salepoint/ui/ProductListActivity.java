@@ -60,7 +60,7 @@ public class ProductListActivity extends AppCompatActivity {
         productListRecylerView.setAdapter(productListAdapter);
 
 
-        ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(this);
+        ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(getApplicationContext());
         ProductListViewModel productListViewModel = ViewModelProviders.of(this, productListViewModelFactory).get(ProductListViewModel.class);
         Log.d("JCC", "Thread - ProductListActivity: " + Thread.currentThread());
         productListViewModel.getProducts().observe(this, productsList -> {

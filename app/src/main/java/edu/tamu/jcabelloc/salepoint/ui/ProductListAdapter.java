@@ -1,5 +1,6 @@
 package edu.tamu.jcabelloc.salepoint.ui;
 
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -46,7 +47,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     // uses the view holder's position to determine what the contents should be, based on its list position.
     @Override
     public void onBindViewHolder(@NonNull ProductListViewHolder holder, int position) {
-        holder.productIconImageView.setImageResource(R.drawable.ic_product);
+        holder.productIconImageView.setImageBitmap(BitmapFactory.decodeByteArray(products.get(position).getImage(), 0 , products.get(position).getImage().length));
         holder.productNameTextView.setText(products.get(position).getName());
         //Log.d("JCC", "onBindViewHolder");
     }

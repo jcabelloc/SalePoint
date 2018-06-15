@@ -1,15 +1,19 @@
 package edu.tamu.jcabelloc.salepoint.ui;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -19,16 +23,26 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import edu.tamu.jcabelloc.salepoint.R;
+import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
+import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
+import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
+import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 
 public class NewProductActivity extends AppCompatActivity {
 
     ImageView productImageView;
+    EditText productNameEditText;
+    EditText priceEditText;
+    Bitmap imageBitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_product);
         productImageView = findViewById(R.id.productImageView);
+        productNameEditText = findViewById(R.id.productNameEditText);
+        priceEditText = findViewById(R.id.priceEditText);
+
     }
 
     //TODO Check Permissions
@@ -37,6 +51,7 @@ public class NewProductActivity extends AppCompatActivity {
         startActivityForResult(intent, 1);
     }
 
+    //TODO refactor this section
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -52,31 +67,20 @@ public class NewProductActivity extends AppCompatActivity {
                 // Decode bitmap with inSampleSize set
                 options.inJustDecodeBounds = false;
                 input = this.getContentResolver().openInputStream(selectedImageUri);
-                Bitmap imageBitmap = BitmapFactory.decodeStream(input, null, options);
-
+                imageBitmap = BitmapFactory.decodeStream(input, null, options);
                 input.close();
-
-                //Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImageUri);
                 productImageView.setImageBitmap(imageBitmap);
-                Log.d("JCC", "imageBitmap.getWidth(): " + imageBitmap.getWidth());
-                Log.d("JCC", "imageBitmap.getHeight(): " + imageBitmap.getHeight());
-                Log.d("JCC", "imageBitmap.getByteCount(): " + imageBitmap.getByteCount());
-                Log.d("JCC", "imageBitmap.getConfig().toString(): " + imageBitmap.getConfig().toString());
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                imageBitmap.compress(Bitmap.CompressFormat.PNG, 0, byteArrayOutputStream);
-                Bitmap newImageBitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.toByteArray().length);
-                Log.d("JCC", "newImageBitmap.getWidth(): " + newImageBitmap.getWidth());
-                Log.d("JCC", "newImageBitmap.getHeight(): " + newImageBitmap.getHeight());
-                Log.d("JCC", "newImageBitmap.getByteCount(): " + newImageBitmap.getByteCount());
-                Log.d("JCC", "newImageBitmap.getConfig().toString(): " + newImageBitmap.getConfig().toString());
-
-                OutputStream outputStream = openFileOutput("newImage.png", Context.MODE_PRIVATE);
-                newImageBitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void addProduct(View view){
+        ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(getApplicationContext());
+        ProductListViewModel productListViewModel = ViewModelProviders.of(this, productListViewModelFactory).get(ProductListViewModel.class);
+        Product newProduct = new Product(productNameEditText.getText().toString(), Double.valueOf(priceEditText.getText().toString()),getBitmapAsByteArray(imageBitmap));
+        productListViewModel.insert(newProduct);
     }
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
@@ -97,5 +101,11 @@ public class NewProductActivity extends AppCompatActivity {
             }
         }
         return inSampleSize;
+    }
+
+    public static byte[] getBitmapAsByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, outputStream);
+        return outputStream.toByteArray();
     }
 }
