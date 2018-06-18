@@ -1,10 +1,10 @@
 <resources>
-    <string name="app_name">SalePoint</string>
-    <string name="product_name_hint">Nombre del Producto</string>
-    <string name="product_price_hint">Precio del Producto</string>
-    <string name="add_button_text">Agregar</string>
-    <string name="product_image_description">Imagen del Producto</string>
-    <string name="product_description_hint">Informacion del Producto</string>
-    <string name="product_category_hint">Categoria del Producto</string>
-    <string name="long_product_description_hint">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo</string>
+<string name="app_name">SalePoint</string>
+<string name="product_name_hint">Nombre del Producto</string>
+<string name="product_price_hint">Precio del Producto</string>
+<string name="add_button_text">Agregar</string>
+<string name="product_image_description">Imagen del Producto</string>
+<string name="product_description_hint">Informacion del Producto</string>
+<string name="product_category_hint">Categoria del Producto</string>
+<string name="long_product_description_hint">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo</string>
 </resources>

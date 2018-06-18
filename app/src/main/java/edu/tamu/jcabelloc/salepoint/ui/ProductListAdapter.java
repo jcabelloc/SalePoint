@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -16,10 +17,12 @@ import java.util.List;
 
 import edu.tamu.jcabelloc.salepoint.R;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
+import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductListViewHolder> {
 
     List<ListViewProduct> products;
+    OnItemClickListener listener;
 
     public class ProductListViewHolder extends RecyclerView.ViewHolder {
         ImageView productIconImageView;
@@ -32,12 +35,22 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             productNameTextView = view.findViewById(R.id.productNameTextView);
             descriptionTextView = view.findViewById(R.id.descriptionTextView);
             priceTextView = view.findViewById(R.id.priceTextView);
-            //Log.d("JCC", "ProductListViewHolder");
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(products.get(getAdapterPosition()).getId());
+                }
+            });
         }
     }
 
-    public ProductListAdapter(List<ListViewProduct> products){
+    public interface OnItemClickListener {
+        void onItemClick(int id);
+    }
+
+    public ProductListAdapter(List<ListViewProduct> products, OnItemClickListener listener){
         this.products = products;
+        this.listener = listener;
     }
 
     //The adapter creates view holders as needed
@@ -46,9 +59,9 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public ProductListAdapter.ProductListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View productItem = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product_list, parent, false);
         ProductListViewHolder productListViewHolder = new ProductListViewHolder(productItem);
-        //Log.d("JCC", "onCreateViewHolder");
         return productListViewHolder;
     }
+
     //  binds the view holders to their data.
     // uses the view holder's position to determine what the contents should be, based on its list position.
     @Override
@@ -64,12 +77,10 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         }
         holder.descriptionTextView.setText(description);
         holder.priceTextView.setText("S/" + String.valueOf(products.get(position).getPrice()));
-        //Log.d("JCC", "onBindViewHolder");
     }
 
     @Override
     public int getItemCount() {
-        //Log.d("JCC", "getItemCount:  " + String.valueOf(products.size()));
         return products.size();
     }
 

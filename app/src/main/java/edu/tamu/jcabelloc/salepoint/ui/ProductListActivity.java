@@ -56,7 +56,14 @@ public class ProductListActivity extends AppCompatActivity {
 
 
         List<ListViewProduct> products = new ArrayList<>();
-        ProductListAdapter productListAdapter = new ProductListAdapter(products);
+        ProductListAdapter productListAdapter = new ProductListAdapter(products, new ProductListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int id) {
+                Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "Element Clicked: " + id, Toast.LENGTH_LONG).show();
+            }
+        });
         productListRecylerView.setAdapter(productListAdapter);
 
 
@@ -71,47 +78,8 @@ public class ProductListActivity extends AppCompatActivity {
 
         });
 
-        /*
-        Handler handler = new Handler();
-        handler.postDelayed( ()-> {
-            List<Product> newProducts = new ArrayList<>();
-            Random rand = new Random();
-            newProducts.add(new Product(rand.nextInt(), "Product 1", 100.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 2", 200.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 3", 300.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 4", 400.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 5", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 6", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 7", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 8", 100.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 9", 200.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 10", 300.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 11", 400.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 12", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 13", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 14", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 15", 100.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 16", 200.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 17", 300.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 18", 400.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 19", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 20", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 21", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 22", 400.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 23", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 24", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 25", 100.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 26", 200.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 27", 300.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 28", 400.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 29", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 30", 500.0));
-            newProducts.add(new Product(rand.nextInt(), "Product 31", 500.0));
-            Log.d("JCC", "newProducts: " + Arrays.toString(newProducts.toArray()));
-            productListViewModel.insert(newProducts.get(rand.nextInt(31)));
-        }, 7000);
-        */
-
-
+    }
+    public void onItemClick() {
+        Toast.makeText(this, "Item Clicked", Toast.LENGTH_LONG).show();
     }
 }
