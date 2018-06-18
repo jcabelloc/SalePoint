@@ -85,6 +85,8 @@ public class NewProductActivity extends AppCompatActivity {
         double productPrice = Double.valueOf(priceEditText.getText().toString());
         Product newProduct = new Product(productName, productDescription, productPrice, getBitmapAsByteArray(imageBitmap));
         productListViewModel.insert(newProduct);
+        Intent intent = new Intent(this, ProductListActivity.class);
+        startActivity(intent);
     }
 
     public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {

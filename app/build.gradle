@@ -46,4 +46,7 @@ dependencies {
     // JCC: Add Room Dependencies
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+
+    // JCC CardView Dependency
+    implementation 'com.android.support:cardview-v7:27.1.1'
 }
