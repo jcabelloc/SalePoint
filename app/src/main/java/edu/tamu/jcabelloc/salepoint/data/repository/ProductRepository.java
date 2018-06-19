@@ -34,6 +34,10 @@ public class ProductRepository {
         new InsertAsyncTask().execute(product);
     }
 
+    public LiveData<Product> getProduct(int id) {
+        return productDao.getProduct(id);
+    }
+
     private class InsertAsyncTask extends AsyncTask<Product, Void, Void> {
 
         @Override

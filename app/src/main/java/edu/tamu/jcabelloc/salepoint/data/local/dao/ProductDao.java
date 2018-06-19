@@ -22,4 +22,6 @@ public interface ProductDao {
     @Insert
     void insert(Product product);
 
+    @Query("SELECT id, name, description, price, image FROM Product WHERE id = :id")
+    LiveData<Product> getProduct(int id);
 }

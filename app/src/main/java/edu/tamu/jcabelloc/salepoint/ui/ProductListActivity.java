@@ -60,8 +60,8 @@ public class ProductListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(int id) {
                 Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
-                Toast.makeText(getApplicationContext(), "Element Clicked: " + id, Toast.LENGTH_LONG).show();
             }
         });
         productListRecylerView.setAdapter(productListAdapter);
@@ -69,17 +69,12 @@ public class ProductListActivity extends AppCompatActivity {
 
         ProductListViewModelFactory productListViewModelFactory = InjectorUtils.getProductListViewModelFactory(getApplicationContext());
         ProductListViewModel productListViewModel = ViewModelProviders.of(this, productListViewModelFactory).get(ProductListViewModel.class);
-        Log.d("JCC", "Thread - ProductListActivity: " + Thread.currentThread());
         productListViewModel.getProducts().observe(this, productsList -> {
-            Log.d("JCC", "Observed productsList: " + productsList.size() + " - " + Arrays.toString(productsList.toArray()));
             products.clear();
             products.addAll(productsList);
             productListAdapter.notifyDataSetChanged();
 
         });
 
-    }
-    public void onItemClick() {
-        Toast.makeText(this, "Item Clicked", Toast.LENGTH_LONG).show();
     }
 }
