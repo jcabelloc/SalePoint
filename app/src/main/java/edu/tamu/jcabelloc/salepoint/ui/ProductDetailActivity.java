@@ -36,7 +36,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         ProductDetailViewModelFactory productDetailViewModelFactory = InjectorUtils.getProductDetailViewModelFactory(getApplicationContext(), id);
         ProductDetailViewModel productDetailViewModel = ViewModelProviders.of(this, productDetailViewModelFactory).get(ProductDetailViewModel.class);
-        productDetailViewModel.getProduct(id).observe(this, product -> {
+        productDetailViewModel.getProduct().observe(this, product -> {
             bindProductToUI(product);
         });
 

@@ -2,7 +2,6 @@ package edu.tamu.jcabelloc.salepoint.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,21 +10,22 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import edu.tamu.jcabelloc.salepoint.R;
+import edu.tamu.jcabelloc.salepoint.ViewModel.OrderInProgressViewModel;
+import edu.tamu.jcabelloc.salepoint.ViewModel.OrderInProgressViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
+import edu.tamu.jcabelloc.salepoint.data.local.entity.Order;
 import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 public class ProductListActivity extends AppCompatActivity {
 
+    String user = "system";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +74,19 @@ public class ProductListActivity extends AppCompatActivity {
             products.addAll(productsList);
             productListAdapter.notifyDataSetChanged();
 
+        });
+
+        // Accessing Order in progress
+        OrderInProgressViewModelFactory orderInProgressViewModelFactory = InjectorUtils.getOrderViewModelFactory(getApplicationContext(), user);
+        OrderInProgressViewModel orderInProgressViewModel = ViewModelProviders.of(this, orderInProgressViewModelFactory).get(OrderInProgressViewModel.class);
+        orderInProgressViewModel.getOrderInProgress().observe(this, order -> {
+            if (order != null) {
+                Log.d("JCC", "OrderId - OrderString: " +  order.getId() + " - " + order.toString());
+            } else {
+                Log.d("JCC", "OrderId - OrderString: " +  "Order is null ");
+                Order emptyOrder = new Order(Order.STATUS_CREATED, 0, user);
+                orderInProgressViewModel.insert(emptyOrder);
+            }
         });
 
     }
