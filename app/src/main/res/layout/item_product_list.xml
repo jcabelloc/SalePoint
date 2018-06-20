@@ -7,8 +7,8 @@
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingBottom="12dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
+    android:paddingLeft="12dp"
+    android:paddingRight="12dp"
     android:paddingTop="12dp">
     <ImageView
         android:id="@+id/productIconImageView"
@@ -23,7 +23,7 @@
         android:id="@+id/productNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="12dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintBottom_toTopOf="@+id/productGuideline"
         app:layout_constraintLeft_toRightOf="@+id/productIconImageView"
@@ -40,7 +40,7 @@
         android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="12dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/secondary_text"
         app:layout_constraintLeft_toRightOf="@+id/productIconImageView"
@@ -51,12 +51,22 @@
         android:id="@+id/priceTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
         android:fontFamily="sans-serif-light"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/price_text_size"
         app:layout_constraintBottom_toTopOf="@+id/productGuideline"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/addCartImageButton"
         app:layout_constraintTop_toTopOf="@+id/productGuideline"
         tools:text="S/25" />
+
+    <ImageButton
+        android:id="@+id/addCartImageButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/productGuideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/productGuideline"
+        app:srcCompat="@drawable/ic_add_shopping_cart" />
 
 </android.support.constraint.ConstraintLayout>
