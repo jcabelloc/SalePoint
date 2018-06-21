@@ -2,6 +2,7 @@ package edu.tamu.jcabelloc.salepoint.data.local.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 
@@ -26,6 +27,15 @@ public class OrderDetail {
 
     public OrderDetail(int id, int orderId, int productId, int quantity, double unitPrice, double subTotal) {
         this.id = id;
+        this.orderId = orderId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.subTotal = subTotal;
+    }
+
+    @Ignore
+    public OrderDetail(int orderId, int productId, int quantity, double unitPrice, double subTotal) {
         this.orderId = orderId;
         this.productId = productId;
         this.quantity = quantity;

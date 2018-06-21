@@ -64,6 +64,7 @@
         android:id="@+id/addCartImageButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
+        android:onClick="addProductToCart"
         app:layout_constraintBottom_toTopOf="@+id/productGuideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/productGuideline"

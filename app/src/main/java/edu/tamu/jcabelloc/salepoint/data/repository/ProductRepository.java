@@ -30,6 +30,7 @@ public class ProductRepository {
     public LiveData<List<ListViewProduct>> getAllProducts(){
         return products;
     }
+
     public void insert(Product product) {
         new InsertAsyncTask().execute(product);
     }

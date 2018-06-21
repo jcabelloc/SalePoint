@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,12 +30,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         TextView productNameTextView;
         TextView descriptionTextView;
         TextView priceTextView;
+        ImageButton addCartImageButton;
         public ProductListViewHolder(View view){
             super(view);
             productIconImageView = view.findViewById(R.id.productIconImageView);
             productNameTextView = view.findViewById(R.id.productNameTextView);
             descriptionTextView = view.findViewById(R.id.descriptionTextView);
             priceTextView = view.findViewById(R.id.priceTextView);
+            addCartImageButton = view.findViewById(R.id.addCartImageButton);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -77,6 +80,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         }
         holder.descriptionTextView.setText(description);
         holder.priceTextView.setText("S/" + String.valueOf(products.get(position).getPrice()));
+        holder.addCartImageButton.setTag(products.get(position).getId());
+
     }
 
     @Override

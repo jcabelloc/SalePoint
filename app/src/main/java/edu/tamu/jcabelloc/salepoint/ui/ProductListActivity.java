@@ -10,22 +10,27 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.tamu.jcabelloc.salepoint.R;
+import edu.tamu.jcabelloc.salepoint.ViewModel.OrderDetailsViewModel;
+import edu.tamu.jcabelloc.salepoint.ViewModel.OrderDetailsViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.OrderInProgressViewModel;
 import edu.tamu.jcabelloc.salepoint.ViewModel.OrderInProgressViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModel;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.Order;
+import edu.tamu.jcabelloc.salepoint.data.local.entity.OrderDetail;
 import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 public class ProductListActivity extends AppCompatActivity {
 
     String user = "system";
+    int orderId = -1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,18 +81,31 @@ public class ProductListActivity extends AppCompatActivity {
 
         });
 
-        // Accessing Order in progress
+        // Accessing o Creating Order in Progress
+        // Business Rule: There must be just one order in progress per user
         OrderInProgressViewModelFactory orderInProgressViewModelFactory = InjectorUtils.getOrderViewModelFactory(getApplicationContext(), user);
         OrderInProgressViewModel orderInProgressViewModel = ViewModelProviders.of(this, orderInProgressViewModelFactory).get(OrderInProgressViewModel.class);
         orderInProgressViewModel.getOrderInProgress().observe(this, order -> {
             if (order != null) {
-                Log.d("JCC", "OrderId - OrderString: " +  order.getId() + " - " + order.toString());
+                orderId = order.getId();
             } else {
-                Log.d("JCC", "OrderId - OrderString: " +  "Order is null ");
                 Order emptyOrder = new Order(Order.STATUS_CREATED, 0, user);
                 orderInProgressViewModel.insert(emptyOrder);
             }
         });
 
+    }
+
+    public void addProductToCart(View view) {
+        int productId = Integer.valueOf(view.getTag().toString());
+        Toast.makeText(this, "Product Added: " + productId, Toast.LENGTH_LONG).show();
+        OrderDetailsViewModelFactory orderDetailsViewModelFactory = InjectorUtils.getOrderDetailViewModelFactory(getApplicationContext(), orderId);
+        OrderDetailsViewModel orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
+
+        OrderDetail newOrderDetail = new OrderDetail(orderId, productId, 1, 100, 100);
+        orderDetailsViewModel.insert(newOrderDetail);
+        orderDetailsViewModel.getOrderDetails().observe(this, orderDetails -> {
+            Log.d("JCC", "Number of Order Details: " + orderDetails.size());
+        });
     }
 }
