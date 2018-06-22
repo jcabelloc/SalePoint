@@ -30,7 +30,11 @@ import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 public class ProductListActivity extends AppCompatActivity {
 
     String user = "system";
-    int orderId = -1;
+    Order orderInProgress;
+    OrderDetailsViewModel orderDetailsViewModel;
+    List<OrderDetail> orderDetails;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,25 +91,41 @@ public class ProductListActivity extends AppCompatActivity {
         OrderInProgressViewModel orderInProgressViewModel = ViewModelProviders.of(this, orderInProgressViewModelFactory).get(OrderInProgressViewModel.class);
         orderInProgressViewModel.getOrderInProgress().observe(this, order -> {
             if (order != null) {
-                orderId = order.getId();
+                orderInProgress = order;
+                OrderDetailsViewModelFactory orderDetailsViewModelFactory = InjectorUtils.getOrderDetailViewModelFactory(getApplicationContext(), orderInProgress.getId());
+                orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
+                orderDetailsViewModel.getOrderDetails().observe(this, orderDetailsObserved -> {
+                    orderDetails = orderDetailsObserved;
+                    Log.d("JCC", "Number of Order Details: " + orderDetails.size());
+                });
+
             } else {
                 Order emptyOrder = new Order(Order.STATUS_CREATED, 0, user);
                 orderInProgressViewModel.insert(emptyOrder);
             }
         });
 
+
     }
 
     public void addProductToCart(View view) {
         int productId = Integer.valueOf(view.getTag().toString());
-        Toast.makeText(this, "Product Added: " + productId, Toast.LENGTH_LONG).show();
-        OrderDetailsViewModelFactory orderDetailsViewModelFactory = InjectorUtils.getOrderDetailViewModelFactory(getApplicationContext(), orderId);
-        OrderDetailsViewModel orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
+        if (orderDetailsContainsProduct(orderDetails, productId)) {
+            Toast.makeText(this, "Product is already on Cart", Toast.LENGTH_LONG).show();
+        } else {
+            OrderDetail newOrderDetail = new OrderDetail(orderInProgress.getId(), productId);
+            orderDetailsViewModel.addOrderDetailToCart(newOrderDetail);
+            Toast.makeText(this, "Product Added: " + productId, Toast.LENGTH_LONG).show();
+        }
+    }
 
-        OrderDetail newOrderDetail = new OrderDetail(orderId, productId, 1, 100, 100);
-        orderDetailsViewModel.insert(newOrderDetail);
-        orderDetailsViewModel.getOrderDetails().observe(this, orderDetails -> {
-            Log.d("JCC", "Number of Order Details: " + orderDetails.size());
-        });
+    public boolean orderDetailsContainsProduct(final List<OrderDetail> orderDetails, final int productId){
+        //return orderDetails.stream().filter(o -> o.getProductId().equals(productId)).findFirst().isPresent();
+        for (OrderDetail orderDetail : orderDetails) {
+                if (orderDetail.getProductId() == productId ) {
+                    return true;
+                }
+        }
+        return false;
     }
 }

@@ -23,7 +23,7 @@ public class OrderDetailsViewModel extends ViewModel {
         return orderDetails;
     }
 
-    public void insert(OrderDetail orderDetail) {
-        orderDetailRepository.insert(orderDetail);
+    public void addOrderDetailToCart(OrderDetail orderDetail) {
+        orderDetailRepository.addOrderDetailToCart(orderDetail);
     }
 }

@@ -43,6 +43,12 @@ public class OrderDetail {
         this.subTotal = subTotal;
     }
 
+    @Ignore 
+    public OrderDetail(int orderId, int productId) {
+        this.orderId = orderId;
+        this.productId = productId;
+    }
+
     public int getId() {
         return id;
     }

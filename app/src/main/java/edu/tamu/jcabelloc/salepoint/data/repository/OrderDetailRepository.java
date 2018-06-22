@@ -32,6 +32,14 @@ public class OrderDetailRepository {
         new InsertAsyncTask().execute(orderDetail);
     }
 
+    public void addOrderDetailToCart(OrderDetail orderDetail) {
+        // TODO Refactor this part
+        orderDetail.setQuantity(1);
+        orderDetail.setUnitPrice(100);
+        orderDetail.setSubTotal(100);
+        new InsertAsyncTask().execute(orderDetail);
+    }
+
     private class InsertAsyncTask extends AsyncTask<OrderDetail, Void, Void> {
         @Override
         protected Void doInBackground(OrderDetail... orderDetails) {
