@@ -1,7 +1,10 @@
 package edu.tamu.jcabelloc.salepoint.ui;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,6 +31,7 @@ import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.dto.ListViewProduct;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.Order;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.OrderDetail;
+import edu.tamu.jcabelloc.salepoint.drawable.CountDrawable;
 import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
 public class ProductListActivity extends AppCompatActivity {
@@ -34,7 +39,8 @@ public class ProductListActivity extends AppCompatActivity {
     String user = "system";
     Order orderInProgress;
     OrderDetailsViewModel orderDetailsViewModel;
-    List<OrderDetail> orderDetails;
+    List<OrderDetail> orderDetails = new ArrayList<>();
+    Menu defaultMenu;
 
 
     @Override
@@ -98,7 +104,7 @@ public class ProductListActivity extends AppCompatActivity {
                 orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
                 orderDetailsViewModel.getOrderDetails().observe(this, orderDetailsObserved -> {
                     orderDetails = orderDetailsObserved;
-                    Log.d("JCC", "Number of Order Details: " + orderDetails.size());
+                    invalidateOptionsMenu();
                 });
 
             } else {
@@ -112,7 +118,14 @@ public class ProductListActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_product_list, menu);
+        defaultMenu = menu;
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        setItemsCountOnCart(this, String.valueOf(orderDetails.size()));
+        return super.onPrepareOptionsMenu(menu);
     }
 
     public void addProductToCart(View view) {
@@ -122,7 +135,7 @@ public class ProductListActivity extends AppCompatActivity {
         } else {
             OrderDetail newOrderDetail = new OrderDetail(orderInProgress.getId(), productId);
             orderDetailsViewModel.addOrderDetailToCart(newOrderDetail);
-            Toast.makeText(this, "Product Added: " + productId, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Product Added", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -134,5 +147,24 @@ public class ProductListActivity extends AppCompatActivity {
                 }
         }
         return false;
+    }
+
+    public void setItemsCountOnCart(Context context, String count) {
+        MenuItem menuItem = defaultMenu.findItem(R.id.action_shopping_cart);
+        LayerDrawable icon = (LayerDrawable) menuItem.getIcon();
+
+        CountDrawable badge;
+
+        // Reuse drawable if possible
+        Drawable reuse = icon.findDrawableByLayerId(R.id.ic_group_count);
+        if (reuse != null && reuse instanceof CountDrawable) {
+            badge = (CountDrawable) reuse;
+        } else {
+            badge = new CountDrawable(context);
+        }
+
+        badge.setCount(count);
+        icon.mutate();
+        icon.setDrawableByLayerId(R.id.ic_group_count, badge);
     }
 }

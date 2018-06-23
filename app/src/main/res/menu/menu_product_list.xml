@@ -9,11 +9,15 @@
         app:showAsAction="ifRoom|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView" />
 
-    <!-- "Shopping Cart", should appear as action button if possible -->
     <item
         android:id="@+id/action_shopping_cart"
-        android:icon="@drawable/ic_shopping_cart"
+        android:icon="@drawable/ic_group_cart"
         android:title="@string/shopping_cart_action"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
+
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_settings"
+        android:title="@string/settings_action"
+        app:showAsAction="never"/>
 
 </menu>

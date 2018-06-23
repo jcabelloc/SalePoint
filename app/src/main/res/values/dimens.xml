@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="price_text_size">22dp</dimen>
+    <dimen name="badge_count_textsize">12dp</dimen>
 
 </resources>
