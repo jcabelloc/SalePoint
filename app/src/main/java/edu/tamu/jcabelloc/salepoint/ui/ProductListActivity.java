@@ -128,6 +128,32 @@ public class ProductListActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                // User chose the "Settings" item, show the app settings UI...
+                Toast.makeText(this, "Settings Tapped", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_search:
+                Toast.makeText(this, "Search Tapped", Toast.LENGTH_SHORT).show();
+                return true;
+
+            case R.id.action_shopping_cart:
+                Toast.makeText(this, "Shopping Cart Tapped", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), OrderDetailsActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
+
     public void addProductToCart(View view) {
         int productId = Integer.valueOf(view.getTag().toString());
         if (orderDetailsContainsProduct(orderDetails, productId)) {

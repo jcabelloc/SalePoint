@@ -10,5 +10,7 @@
     <string name="search_action">Buscar</string>
     <string name="shopping_cart_action">Pedido en Proceso</string>
     <string name="settings_action">Settings</string>
+    <string name="place_order_button_text">Confirmar</string>
+
 
 </resources>

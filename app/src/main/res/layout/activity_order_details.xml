@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.OrderDetailsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/appToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/orderDetailsRecylerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <Button
+            android:id="@+id/buttonAwesome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="128dp"
+            android:text="@string/place_order_button_text"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="24dp"
+            style="@style/Button"
+            />
+    </FrameLayout>
+</LinearLayout>
