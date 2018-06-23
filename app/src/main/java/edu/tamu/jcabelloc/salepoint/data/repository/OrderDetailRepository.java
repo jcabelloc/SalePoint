@@ -47,4 +47,34 @@ public class OrderDetailRepository {
             return null;
         }
     }
+
+    public void deleteOrderDetail(int orderDetailId){
+        new DeleteAsyncTask().execute(orderDetailId);
+    }
+
+    private class DeleteAsyncTask extends AsyncTask<Integer, Void, Void> {
+        @Override
+        protected Void doInBackground(Integer... ids) {
+            orderDetailDao.delete(ids[0]);
+            return null;
+        }
+    }
+
+    public void addQuantityByOne(int orderDetailId) {
+        new UpdateQuantityAsyncTask().execute(orderDetailId, 1);
+    }
+
+    public void subtractQuantityByOne(int orderDetailId) {
+        new UpdateQuantityAsyncTask().execute(orderDetailId, -1);
+    }
+
+    private class UpdateQuantityAsyncTask extends AsyncTask<Integer, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Integer... values) {
+            orderDetailDao.updateQuantity(values[0], values[1]);
+            return null;
+        }
+    }
+
 }

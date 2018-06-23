@@ -26,4 +26,15 @@ public class OrderDetailsViewModel extends ViewModel {
     public void addOrderDetailToCart(OrderDetail orderDetail) {
         orderDetailRepository.addOrderDetailToCart(orderDetail);
     }
+
+    public void deleteOrderDetail(int orderDetailId) {
+        orderDetailRepository.deleteOrderDetail(orderDetailId);
+    }
+    public void addQuantityByOne(int orderDetailId) {
+        orderDetailRepository.addQuantityByOne(orderDetailId);
+    }
+
+    public void subtractQuantityByOne(int orderDetailId) {
+        orderDetailRepository.subtractQuantityByOne(orderDetailId);
+    }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,8 +20,11 @@ import edu.tamu.jcabelloc.salepoint.data.dto.ListViewOrderDetail;
 public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapter.OrderDetailsViewHolder> {
 
     private List<ListViewOrderDetail> orderDetails;
-    public OrderDetailsAdapter(List<ListViewOrderDetail> orderDetails) {
+    private OnClickListener listener;
+
+    public OrderDetailsAdapter(List<ListViewOrderDetail> orderDetails, OnClickListener listener) {
         this.orderDetails = orderDetails;
+        this.listener = listener;
     }
 
     public class OrderDetailsViewHolder extends RecyclerView.ViewHolder{
@@ -36,8 +40,25 @@ public class OrderDetailsAdapter extends RecyclerView.Adapter<OrderDetailsAdapte
             this.productIconImageView = itemView.findViewById(R.id.productIconImageView);
             this.quantityTextView = itemView.findViewById(R.id.quantityTextView);
             this.subTotalTextView = itemView.findViewById(R.id.subTotalTextView);
-
+            ImageButton addImageButton = itemView.findViewById(R.id.addImageButton);
+            ImageButton subtractImageButton = itemView.findViewById(R.id.subtractImageButton);
+            ImageButton deleteImageButton = itemView.findViewById(R.id.deleteImageButton);
+            addImageButton.setOnClickListener((view) -> {
+                listener.onAddQuantityClick(orderDetails.get(getAdapterPosition()).getOrderDetailId());
+            });
+            subtractImageButton.setOnClickListener((view) -> {
+                listener.onSubtractQuantityClick(orderDetails.get(getAdapterPosition()).getOrderDetailId());
+            });
+            deleteImageButton.setOnClickListener( (view) -> {
+                listener.onDeleteClick(orderDetails.get(getAdapterPosition()).getOrderDetailId());
+            });
         }
+    }
+
+    public interface OnClickListener {
+        void onAddQuantityClick(int orderDetailId);
+        void onSubtractQuantityClick(int orderDetailId);
+        void onDeleteClick(int orderDetailId);
     }
 
     @NonNull

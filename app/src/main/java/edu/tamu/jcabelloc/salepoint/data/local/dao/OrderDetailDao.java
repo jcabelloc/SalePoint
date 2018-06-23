@@ -16,4 +16,10 @@ public interface OrderDetailDao {
 
     @Insert
     void insert(OrderDetail orderDetail);
+
+    @Query("DELETE FROM OrderDetail WHERE id = :orderDetailId")
+    void delete(int orderDetailId);
+
+    @Query("UPDATE OrderDetail set quantity = quantity + :value WHERE id = :orderDetailId")
+    void updateQuantity(int orderDetailId, int value);
 }

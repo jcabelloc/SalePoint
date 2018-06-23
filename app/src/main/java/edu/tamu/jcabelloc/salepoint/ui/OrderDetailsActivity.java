@@ -9,6 +9,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +25,9 @@ import edu.tamu.jcabelloc.salepoint.data.local.entity.OrderDetail;
 import edu.tamu.jcabelloc.salepoint.data.local.entity.Product;
 import edu.tamu.jcabelloc.salepoint.utilities.InjectorUtils;
 
-public class OrderDetailsActivity extends AppCompatActivity {
+public class OrderDetailsActivity extends AppCompatActivity implements OrderDetailsAdapter.OnClickListener {
 
+    OrderDetailsViewModel orderDetailsViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,13 +39,13 @@ public class OrderDetailsActivity extends AppCompatActivity {
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         List<ListViewOrderDetail> listViewOrderDetails = new ArrayList<>();
-        OrderDetailsAdapter orderDetailsAdapter = new OrderDetailsAdapter(listViewOrderDetails);
+        OrderDetailsAdapter orderDetailsAdapter = new OrderDetailsAdapter(listViewOrderDetails, this);
         recyclerView.setAdapter(orderDetailsAdapter);
 
         int orderId = getIntent().getIntExtra("orderId", 0);
 
         OrderDetailsViewModelFactory orderDetailsViewModelFactory = InjectorUtils.getOrderDetailViewModelFactory(getApplicationContext(), orderId);
-        OrderDetailsViewModel orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
+        orderDetailsViewModel = ViewModelProviders.of(this, orderDetailsViewModelFactory).get(OrderDetailsViewModel.class);
         orderDetailsViewModel.getOrderDetails().observe(this, orderDetailsObserved -> {
 
             // TODO Refactor this part. Include just products in Order
@@ -68,5 +70,20 @@ public class OrderDetailsActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    public void onAddQuantityClick(int orderDetailId) {
+        orderDetailsViewModel.addQuantityByOne(orderDetailId);
+    }
+
+    @Override
+    public void onSubtractQuantityClick(int orderDetailId) {
+        orderDetailsViewModel.subtractQuantityByOne(orderDetailId);
+    }
+
+    @Override
+    public void onDeleteClick(int orderDetailId) {
+        orderDetailsViewModel.deleteOrderDetail(orderDetailId);
     }
 }
