@@ -8,6 +8,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -70,6 +71,8 @@ public class ProductListActivity extends AppCompatActivity {
         // Set Layout Manager
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         productListRecylerView.setLayoutManager(linearLayoutManager);
+        productListRecylerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+
 
 
         List<ListViewProduct> products = new ArrayList<>();
@@ -108,8 +111,8 @@ public class ProductListActivity extends AppCompatActivity {
                 });
 
             } else {
-                Order emptyOrder = new Order(Order.STATUS_CREATED, 0, user);
-                orderInProgressViewModel.insert(emptyOrder);
+                orderInProgress = new Order(Order.STATUS_CREATED, 0, user);
+                orderInProgressViewModel.insert(orderInProgress);
             }
         });
     }
@@ -143,6 +146,7 @@ public class ProductListActivity extends AppCompatActivity {
             case R.id.action_shopping_cart:
                 Toast.makeText(this, "Shopping Cart Tapped", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), OrderDetailsActivity.class);
+                intent.putExtra("orderId", orderInProgress.getId());
                 startActivity(intent);
                 return true;
 

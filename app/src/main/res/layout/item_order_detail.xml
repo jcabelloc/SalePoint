@@ -18,7 +18,6 @@
         app:layout_constraintBottom_toTopOf="@+id/productGuideline"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@+id/productGuideline"
-        app:srcCompat="@drawable/ic_product"
         tools:src="@drawable/ic_product" />
 
     <TextView
@@ -26,7 +25,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
-        android:text="Product Name"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
         app:layout_constraintLeft_toRightOf="@+id/productIconImageView"
         app:layout_constraintTop_toTopOf="@+id/productIconImageView"
@@ -40,11 +38,10 @@
         app:layout_constraintGuide_percent="0.5"/>
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
         android:textColor="@color/secondary_text"
         app:layout_constraintStart_toEndOf="@+id/productIconImageView"
@@ -52,60 +49,61 @@
         tools:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/quantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="3 und"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/descriptionTextView"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
         tools:text="3 und" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/equalSignTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="="
-        app:layout_constraintBottom_toBottomOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"
+        app:layout_constraintStart_toEndOf="@+id/quantityTextView"
         tools:text="=" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/subTotalTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="S/16.50"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintBottom_toBottomOf="@+id/equalSignTextView"
+        app:layout_constraintStart_toEndOf="@+id/equalSignTextView"
         tools:text="S/16.50" />
 
-    <ImageView
-        android:id="@+id/imageView2"
+    <ImageButton
+        android:id="@+id/deleteImageButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_delete" />
+        app:srcCompat="@drawable/ic_delete_32dp" />
 
-    <ImageView
-        android:id="@+id/imageView3"
+    <ImageButton
+        android:id="@+id/subtractImageButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:background="@android:color/transparent"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:srcCompat="@drawable/ic_minus" />
+        app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"
+        app:layout_constraintEnd_toStartOf="@+id/deleteImageButton"
+        app:srcCompat="@drawable/ic_subtract_box_32dp" />
 
-    <ImageView
-        android:id="@+id/imageView4"
+    <ImageButton
+        android:id="@+id/addImageButton"
         android:layout_width="32dp"
         android:layout_height="32dp"
+        android:background="@android:color/transparent"
         android:layout_marginEnd="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toStartOf="@+id/imageView3"
-        app:srcCompat="@drawable/ic_add" />
+        app:layout_constraintBottom_toBottomOf="@+id/quantityTextView"
+        app:layout_constraintEnd_toStartOf="@+id/subtractImageButton"
+        app:srcCompat="@drawable/ic_add_box_32dp" />
 
 
 </android.support.constraint.ConstraintLayout>
