@@ -137,6 +137,8 @@ public class ProductListActivity extends AppCompatActivity {
             case R.id.action_settings:
                 // User chose the "Settings" item, show the app settings UI...
                 Toast.makeText(this, "Settings Tapped", Toast.LENGTH_SHORT).show();
+                Intent tempIntent = new Intent(getApplicationContext(), PurchaseDetailsActivity.class);
+                startActivity(tempIntent);
                 return true;
 
             case R.id.action_search:

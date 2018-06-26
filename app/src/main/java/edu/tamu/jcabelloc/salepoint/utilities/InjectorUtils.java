@@ -6,10 +6,14 @@ import edu.tamu.jcabelloc.salepoint.ViewModel.OrderDetailsViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.OrderInProgressViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductDetailViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.ViewModel.ProductListViewModelFactory;
+import edu.tamu.jcabelloc.salepoint.ViewModel.PurchaseDetailsViewModelFactory;
+import edu.tamu.jcabelloc.salepoint.ViewModel.PurchaseInProgressViewModelFactory;
 import edu.tamu.jcabelloc.salepoint.data.local.database.SaleAppDatabase;
 import edu.tamu.jcabelloc.salepoint.data.repository.OrderDetailRepository;
 import edu.tamu.jcabelloc.salepoint.data.repository.OrderRepository;
 import edu.tamu.jcabelloc.salepoint.data.repository.ProductRepository;
+import edu.tamu.jcabelloc.salepoint.data.repository.PurchaseDetailRepository;
+import edu.tamu.jcabelloc.salepoint.data.repository.PurchaseRepository;
 
 public class InjectorUtils {
 
@@ -26,6 +30,16 @@ public class InjectorUtils {
     private static OrderDetailRepository getOrderDetailRepository(Context context) {
         SaleAppDatabase saleAppDatabase = SaleAppDatabase.getInstance(context);
         return OrderDetailRepository.getInstance(saleAppDatabase.orderDetailDao());
+    }
+
+    private static PurchaseRepository getPurchaseRepository(Context context) {
+        SaleAppDatabase saleAppDatabase = SaleAppDatabase.getInstance(context);
+        return PurchaseRepository.getInstance(saleAppDatabase.purchaseDao());
+    }
+
+    private static PurchaseDetailRepository getPurchaseDetailRepository(Context context) {
+        SaleAppDatabase saleAppDatabase = SaleAppDatabase.getInstance(context);
+        return PurchaseDetailRepository.getInstance(saleAppDatabase.purchaseDetailDao());
     }
 
     public static ProductListViewModelFactory getProductListViewModelFactory(Context context) {
@@ -49,5 +63,14 @@ public class InjectorUtils {
         return new OrderDetailsViewModelFactory(orderId, orderDetailRepository);
     }
 
+    public static PurchaseInProgressViewModelFactory getPurchaseInProgressViewModelFactory(Context context, String user) {
+        PurchaseRepository purchaseRepository = getPurchaseRepository(context);
+        return new PurchaseInProgressViewModelFactory(user, purchaseRepository);
+    }
 
+
+    public static PurchaseDetailsViewModelFactory getPurchaseDetailsViewModelFactory(Context context, int purchaseId) {
+        PurchaseDetailRepository purchaseDetailRepository = getPurchaseDetailRepository(context);
+        return new PurchaseDetailsViewModelFactory(purchaseId, purchaseDetailRepository);
+    }
 }

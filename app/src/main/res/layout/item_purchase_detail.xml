@@ -5,14 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeight"
     android:paddingBottom="12dp"
     android:paddingLeft="12dp"
     android:paddingRight="12dp"
     android:paddingTop="12dp">
 
-
     <ImageView
-        android:id="@+id/productImageView"
+        android:id="@+id/productIconImageView"
         android:layout_width="80dp"
         android:layout_height="80dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
-        app:layout_constraintStart_toEndOf="@+id/productImageView"
-        app:layout_constraintTop_toTopOf="@+id/productImageView"
+        app:layout_constraintStart_toEndOf="@+id/productIconImageView"
+        app:layout_constraintTop_toTopOf="@+id/productIconImageView"
         tools:text="Product Name" />
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        app:layout_constraintStart_toEndOf="@+id/productImageView"
+        app:layout_constraintStart_toEndOf="@+id/productIconImageView"
         app:layout_constraintTop_toBottomOf="@+id/productNameTextView"
         tools:text="At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti" />
 
@@ -58,7 +58,8 @@
             android:id="@+id/montoTextInputEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="64dp"
+            android:minWidth="72dp"
+            android:inputType="numberDecimal"
             android:hint="Monto S/"
             tools:text="45.90" />
     </android.support.design.widget.TextInputLayout>
@@ -86,7 +87,8 @@
             android:id="@+id/quantityTextInputEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minWidth="32dp"
+            android:inputType="numberDecimal"
+            android:minWidth="48dp"
             android:hint="Nro"
             tools:text="18" />
     </android.support.design.widget.TextInputLayout>
@@ -103,7 +105,7 @@
         tools:text="=" />
 
     <TextView
-        android:id="@+id/unitPriceTextView"
+        android:id="@+id/unitCostTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -114,19 +116,20 @@
         app:layout_constraintStart_toEndOf="@+id/equalSignTextView" />
 
     <TextView
-        android:id="@+id/unitPriceLabelTextView"
+        android:id="@+id/unitCostLabelTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="CU (S/)"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        app:layout_constraintStart_toStartOf="@+id/unitPriceTextView"
+        app:layout_constraintStart_toStartOf="@+id/unitCostTextView"
         app:layout_constraintTop_toTopOf="@+id/quantityTextInputLayout"
-        tools:text="PU (S/)" />
+        tools:text="CU (S/)" />
 
     <ImageButton
         android:id="@+id/deleteImageButton"
         android:layout_width="31dp"
         android:layout_height="31dp"
-        app:layout_constraintBottom_toBottomOf="@+id/unitPriceTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/unitCostTextView"
         app:layout_constraintEnd_toEndOf="parent"
         android:background="@android:color/transparent"
 

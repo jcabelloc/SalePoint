@@ -11,6 +11,6 @@
     <string name="shopping_cart_action">Pedido en Proceso</string>
     <string name="settings_action">Settings</string>
     <string name="place_order_button_text">Confirmar</string>
-
+    <string name="confirm_purchase_button_text">Confirmar</string>
 
 </resources>
