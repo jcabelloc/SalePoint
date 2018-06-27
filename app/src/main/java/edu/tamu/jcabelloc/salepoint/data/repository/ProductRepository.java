@@ -39,6 +39,14 @@ public class ProductRepository {
         return productDao.getProduct(id);
     }
 
+    public List<ListViewProduct> getProducts() {
+        return productDao.getProducts();
+    }
+
+    public List<ListViewProduct> getProductsByName(String productName) {
+        return productDao.getProductsByName(productName);
+    }
+
     private class InsertAsyncTask extends AsyncTask<Product, Void, Void> {
 
         @Override

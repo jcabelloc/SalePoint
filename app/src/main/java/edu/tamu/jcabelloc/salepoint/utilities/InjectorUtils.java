@@ -17,7 +17,7 @@ import edu.tamu.jcabelloc.salepoint.data.repository.PurchaseRepository;
 
 public class InjectorUtils {
 
-    private static ProductRepository getProductRepository(Context context) {
+    public static ProductRepository getProductRepository(Context context) {
         SaleAppDatabase saleAppDatabase = SaleAppDatabase.getInstance(context);
         return ProductRepository.getInstance(saleAppDatabase.productDao());
     }

@@ -20,7 +20,20 @@
         <activity android:name=".ui.NewProductActivity" />
         <activity android:name=".ui.ProductDetailActivity" />
         <activity android:name=".ui.OrderDetailsActivity" />
-        <activity android:name=".ui.PurchaseDetailsActivity"></activity>
+        <!-- 1) Declare the activity to accept the ACTION_SEARCH intent, in an <intent-filter> element.-->
+        <!-- 2) Specify the searchable configuration to use, in a <meta-data> element -->
+        <!-- 3) If you set android:launchMode to "singleTop", then the searchable activity receives the ACTION_SEARCH intent with a call to onNewIntent(Intent), passing the new ACTION_SEARCH intent here.-->
+        <activity android:name=".ui.PurchaseDetailsActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable_purchase_product"/>
+        </activity>
+        <provider
+            android:name=".provider.SearchProductProvider"
+            android:authorities="edu.tamu.jcabelloc.salepoint.provider.SearchProductProvider" />
     </application>
 
 </manifest>

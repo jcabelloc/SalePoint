@@ -24,4 +24,10 @@ public interface ProductDao {
 
     @Query("SELECT id, name, description, price, image FROM Product WHERE id = :id")
     LiveData<Product> getProduct(int id);
+
+    @Query("SELECT id, name, description, price, image FROM Product ORDER BY id ASC")
+    List<ListViewProduct> getProducts();
+
+    @Query("SELECT id, name, description, price, image FROM Product WHERE name LIKE :productName  ORDER BY id ASC")
+    List<ListViewProduct> getProductsByName(String productName);
 }

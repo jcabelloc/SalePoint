@@ -68,7 +68,7 @@ public class PurchaseDetailsActivity extends AppCompatActivity {
                     purchaseDetails.addAll(purchaseDetailsObserved);
                     purchaseDetailsAdapter.notifyDataSetChanged();
                 });
-                //PurchaseDetail tempPurchaseDetail = new PurchaseDetail(purchase.getPurchaseId(), 3, 12, 1.20, 14.40);
+                //PurchaseDetail tempPurchaseDetail = new PurchaseDetail(purchase.getPurchaseId(), 4, 12, 1.20, 14.40);
                 //purchaseDetailsVM.insert(tempPurchaseDetail);
 
             } else {

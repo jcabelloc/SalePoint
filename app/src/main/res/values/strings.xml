@@ -12,5 +12,6 @@
     <string name="settings_action">Settings</string>
     <string name="place_order_button_text">Confirmar</string>
     <string name="confirm_purchase_button_text">Confirmar</string>
+    <string name="search_purchase_product_hint">Ingrese Nombre de Producto</string>
 
 </resources>
